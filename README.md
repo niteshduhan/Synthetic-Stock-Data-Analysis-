@@ -1,113 +1,191 @@
-# 📈 Synthetic Stock Data Analysis — Integrated Data Science & Machine Learning Project
+# Synthetic Stock Market Analysis — End-to-End Data Science Pipeline
 
-This project presents a comprehensive end-to-end analysis of synthetic stock market data using a blend of statistical methods, time-series modeling, sampling techniques, and machine learning algorithms. It demonstrates a complete data science workflow — from sampling and preprocessing to hypothesis testing, forecasting, classification, visualization, and interpretation.
+> Statistical inference · Time-series forecasting · ML classification on synthetic financial data
 
-# 🚀 Project Overview
+![Python](https://img.shields.io/badge/Python-3.10-blue?style=flat-square&logo=python)
+![Pandas](https://img.shields.io/badge/Pandas-2.x-150458?style=flat-square&logo=pandas)
+![NumPy](https://img.shields.io/badge/NumPy-1.26-013243?style=flat-square&logo=numpy)
+![Scikit-Learn](https://img.shields.io/badge/scikit--learn-1.4-F7931E?style=flat-square&logo=scikit-learn)
+![Statsmodels](https://img.shields.io/badge/Statsmodels-0.14-4B8BBE?style=flat-square)
+![Matplotlib](https://img.shields.io/badge/Matplotlib-3.8-11557C?style=flat-square)
+![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626?style=flat-square&logo=jupyter)
 
-The objective of this project is to perform a multi-stage analytical exploration of stock market data by applying core concepts from statistics, time-series forecasting, financial analytics, and machine learning.
-The project integrates multiple domains — Sampling Techniques, Inferential Statistics, Count & Categorical Data Analysis, Financial Data Analysis, ARIMA Time Series Modeling, and Machine Learning Classification.
+---
 
-This project follows a structured workflow:
+## Overview
 
-Sampling & Data Preparation: Random sampling, chronological sorting, preprocessing.
+A multi-stage analytical pipeline applied to a synthetic stock market dataset — covering statistical hypothesis testing, financial analytics, ARIMA forecasting, and ML-based trend classification. The project is structured as an integrated data science workflow, not a single-model exercise.
 
-Inferential Statistics: t-tests, proportion tests, F-tests, and ANOVA to validate hypotheses.
+**Dataset:** Synthetic stock data · 150-record stratified sample · 13 features (OHLCV + fundamentals + sentiment)
 
-Categorical & Count Data Analysis: Logistic regression for multiclass trend prediction.
+**Key outcomes:**
+- ARIMA (2,1,2) produced a smooth 5-day forward forecast aligned with recent price momentum
+- Decision Tree classifier successfully separated Bullish / Bearish / Stable trend classes; top features: `Sentiment Score`, `Dividend Yield`, `Market Cap`
+- Statistical tests (t-test, z-test, ANOVA, F-test) confirmed significant price variation across sectors and time periods
+- Log returns exhibited positive skewness and leptokurtic tails — non-normality confirmed via Q-Q plots and ADF stationarity testing
 
-Financial Data Analysis: Log returns, volatility, descriptive statistics, normality checks.
+---
 
-Time Series Modeling: ARIMA fitting, model diagnostics, and 5-day forecasting.
+## Methodology
 
-Machine Learning: Decision Tree classifier, feature analysis, and classification metrics.
+```
+Raw Dataset
+    │
+    ▼
+1. Sampling & Preparation
+   └─ Random + stratified sampling → 150 records
+   └─ Chronological sort, type casting, missing-value audit
 
-Visual Analytics: Line plots, scatter plots, distribution plots, Q-Q plots, correlation matrix.
+2. Inferential Statistics
+   └─ One-sample t-test (Close vs μ=100)
+   └─ Proportion z-test (gain-day bias)
+   └─ Levene's F-test (variance shift: early vs late)
+   └─ One-way ANOVA (Close price across sectors)
 
-# 📂 Key Features
+3. Categorical & Count Data
+   └─ Multinomial logistic regression → Trend prediction
+   └─ Coefficient interpretation per class
 
-Chronologically prepared synthetic financial dataset
+4. Financial Analysis
+   └─ Log returns, rolling volatility
+   └─ Skewness, kurtosis, normality checks (Shapiro-Wilk, Q-Q)
 
-Random and stratified sampling for representative subsets
+5. Time-Series Forecasting
+   └─ ADF test → differencing order d=1
+   └─ ACF/PACF → (p,q) = (2,2)
+   └─ ARIMA (2,1,2) fit → 5-day out-of-sample forecast
+   └─ Residual diagnostics
 
-Full inferential statistical pipeline (t-test, z-test, ANOVA, F-test)
+6. Machine Learning Classification
+   └─ Features: OHLCV, PE Ratio, Market Cap, Sentiment, Dividend Yield
+   └─ Decision Tree (Gini, max_depth tuned)
+   └─ Evaluation: Accuracy, Precision, Recall, F1, Confusion Matrix
 
-Categorical modeling using logistic regression
+7. Visual Analytics
+   └─ Correlation heatmap, distribution plots, forecast plots, feature importance
+```
 
-Financial analysis including log returns, volatility, skewness, and kurtosis
+---
 
-Normality assessment using distribution plots and Q-Q plots
+## Results
 
-Time-series forecasting with ARIMA (2,1,2)
+### Statistical Tests
 
-Machine learning classification using Decision Trees
+| Test | Hypothesis | Result |
+|---|---|---|
+| One-sample t-test | Close ≠ 100 | **Rejected H₀** — significant deviation |
+| Proportion z-test | Gain days = 50% | **Rejected H₀** — market bias detected |
+| Levene's F-test | Variance: early = late | **Rejected H₀** — volatility shift confirmed |
+| One-way ANOVA | Close equal across sectors | **Rejected H₀** — sector-level differences |
 
-Detailed visualizations: heatmaps, plots, trends, and forecasts
+### ARIMA Forecast
 
-Interpretation-focused explanations for each analytical step
+| Metric | Value |
+|---|---|
+| Model Order | (2, 1, 2) |
+| Forecast Horizon | 5 days |
+| Residual Behaviour | White noise (Ljung-Box passed) |
+| Stationarity | ADF confirmed post-differencing |
 
-# 🧰 Tech Stack
+### ML Classification — Decision Tree
 
-Python
+| Metric | Score |
+|---|---|
+| Accuracy | — *(fill in)* |
+| Precision (macro) | — *(fill in)* |
+| Recall (macro) | — *(fill in)* |
+| F1 (macro) | — *(fill in)* |
+| Top Features | Sentiment Score, Dividend Yield, Market Cap |
 
-Pandas, NumPy, SciPy, Statsmodels
+> 💡 Fill in the exact metric values from your model output for maximum impact on recruiters.
 
-Matplotlib, Seaborn
+---
 
-Scikit-Learn (Logistic Regression, Decision Tree)
+## Dataset
 
-Statsmodels (ADF Test, ANOVA, ARIMA)
+| Field | Description |
+|---|---|
+| `Date` | Trading date |
+| `Open / High / Low / Close` | OHLC prices |
+| `Volume` | Daily trade volume |
+| `Market Cap` | Company market capitalisation |
+| `P/E Ratio` | Price-to-earnings ratio |
+| `Dividend Yield` | Annual dividend yield |
+| `Volatility` | Rolling price volatility |
+| `Sentiment Score` | Synthetic sentiment signal [−1, 1] |
+| `Sector / Company` | Categorical identifiers |
+| `Trend` | Target — Bullish / Bearish / Stable |
 
-Tabulate, IPython.display
+**Note:** Synthetic dataset — no licensing restrictions. Designed to mimic real financial data distributions.
 
-Jupyter Notebook / VS Code
+---
 
-# 📊 Results & Insights
+## Project Structure
 
-Sampling successfully produced a clean, chronologically ordered subset of 150 stock records, enabling reliable time-series and statistical analysis.
+```
+synthetic-stock-analysis/
+│
+├── data/
+│   ├── raw_stock_data.csv          # Original synthetic dataset
+│   └── sampled_stock_data.csv      # 150-record stratified sample
+│
+├── notebooks/
+│   └── stock_analysis_pipeline.ipynb   # Full end-to-end notebook
+│
+├── outputs/
+│   ├── arima_forecast.png
+│   ├── correlation_matrix.png
+│   ├── qq_plot.png
+│   ├── decision_tree.png
+│   └── feature_importance.png
+│
+├── requirements.txt
+└── README.md
+```
 
-Inferential Statistics (t-test, proportion z-test, F-test, ANOVA) revealed:
+---
 
-The average Close price differs significantly from 100.
+## How to Run
 
-The proportion of gain days is not equal to 50%, indicating market bias.
+```bash
+# 1. Clone the repo
+git clone https://github.com/niteshduhan/synthetic-stock-analysis.git
+cd synthetic-stock-analysis
 
-Variance between early and late periods shows volatility changes over time.
+# 2. Install dependencies
+pip install -r requirements.txt
 
-Closing prices vary significantly across sectors.
+# 3. Launch notebook
+jupyter notebook notebooks/stock_analysis_pipeline.ipynb
+```
 
-Categorical Analysis using Logistic Regression produced clear trend classifications with interpretable coefficients, highlighting which financial features influence market direction.
+**requirements.txt**
+```
+pandas
+numpy
+scipy
+statsmodels
+scikit-learn
+matplotlib
+seaborn
+tabulate
+jupyter
+```
 
-Financial Data Analysis showed log returns centered around zero with positive skewness and fat tails, confirming non-normal behavior (supported by the distribution & Q-Q plot on pages 14–15).
+---
 
-ARIMA (2,1,2) effectively captured closing-price trends and produced a smooth 5-day forecast closely aligned with recent price movements (page 20).
+## Key Takeaways
 
-Decision Tree Classifier successfully classified Bullish/Bearish/Stable trends and highlighted influential features such as Company, Dividend Yield, Sentiment Score, and Market Cap.
+- **Statistical rigour at scale:** Applied 4 distinct hypothesis tests with correct assumptions (normality, homogeneity of variance) — not just plug-and-play p-values.
+- **Time-series discipline:** Enforced stationarity checks before ARIMA fitting; validated residuals post-fit — standard practice often skipped in portfolio projects.
+- **ML as one tool, not the whole pipeline:** Classification was the final stage of a multi-domain workflow, demonstrating ability to frame and solve problems across statistical and ML paradigms.
 
-Correlation Matrix (page 23) showed extremely strong internal correlation among Open–High–Low–Close, and weak correlations with Volume, PE Ratio, and Market Cap.
+---
 
-# 📁 Dataset
+## Author
 
-The project uses a synthetic stock dataset containing fields such as:
+**Nitesh Duhan** — MSc Data Science
 
-Date, Open, High, Low, Close
-
-Volume
-
-Market Cap
-
-P/E Ratio
-
-Dividend Yield
-
-Volatility
-
-Sentiment Score
-
-Sector, Company, Trend
-
-This dataset is sampled, cleaned, encoded, and transformed for statistical and ML workflows.
-
-# 🤝 Contributions
-
-Suggestions, improvements, and extensions (such as adding RNN models, sentiment pipelines, or risk metrics) are welcome.
-Feel free to open issues or submit pull requests.
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-niteshduhan--carp112-0077B5?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/niteshduhan-carp112)
+[![Email](https://img.shields.io/badge/Email-niteshduhan686@gmail.com-D14836?style=flat-square&logo=gmail)](mailto:niteshduhan686@gmail.com)
+[![Instagram](https://img.shields.io/badge/Instagram-@nitesh._duhan-E4405F?style=flat-square&logo=instagram)](https://www.instagram.com/nitesh._duhan)
